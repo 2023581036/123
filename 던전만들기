@@ -1,0 +1,55 @@
+import time
+
+# 1. 함수 (Function): 반복되는 작업을 하나로 묶어줍니다.
+def print_slow(text):
+    """글자를 타자기처럼 천천히 출력하는 함수"""
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(0.05) # 0.05초 대기
+    print() # 줄바꿈
+
+def main():
+    # 2. 입출력과 변수 (Input/Output & Variables)
+    print_slow("🐍 파이썬 문법 던전에 오신 것을 환영합니다!")
+    name = input("용사의 이름을 입력하세요: ")
+    print_slow(f"환영합니다, [{name}] 용사님! 몬스터를 물리치려면 퀴즈를 풀어야 합니다.\n")
+
+    hp = 100       # 용사의 체력
+    score = 0      # 용사의 점수
+
+    # 3. 리스트와 딕셔너리 (List & Dictionary): 여러 데이터를 깔끔하게 정리합니다.
+    monsters = [
+        {"name": "슬라임", "question": "화면에 글자를 출력할 때 사용하는 파이썬 함수는?", "answer": "print"},
+        {"name": "고블린", "question": "참(True)과 거짓(False)을 나타내는 자료형은? (영어로)", "answer": "bool"},
+        {"name": "오크", "question": "조건이 참인 동안 계속해서 코드를 반복 실행하는 명령어는?", "answer": "while"}
+    ]
+
+    # 4. 반복문 (For Loop): 리스트 안의 몬스터들을 순서대로 꺼내옵니다.
+    for i, monster in enumerate(monsters):
+        print(f"--- 👾 [야생의 {monster['name']}이(가) 나타났다!] ---")
+        print_slow(f"문제: {monster['question']}")
+         
+        user_answer = input("정답을 입력하세요: ").strip().lower()
+
+        # 5. 조건문 (If, Else): 정답이 맞는지 틀린지 판단합니다.
+        if user_answer == monster['answer'].lower():
+            print_slow("정답입니다! 몬스터를 물리쳤습니다! 🗡️\n")
+            score += 10
+        else:
+            print_slow(f"틀렸습니다! {monster['name']}에게 공격받았습니다! 💥 (정답: {monster['answer']})")
+            hp -= 30
+            print(f"현재 체력: {hp} / 100\n")
+
+        # 체력이 0 이하가 되면 게임 종료
+        if hp <= 0:
+            print_slow("체력이 모두 소진되었습니다... 게임 오버! 💀")
+            break # 반복문을 즉시 탈출합니다.
+
+    # 게임 결과 출력
+    if hp > 0:
+        print_slow(f"🎉 던전 클리어! 🎉")
+        print_slow(f"최종 점수: {score}점, 남은 체력: {hp}")
+
+# 파이썬 프로그램의 시작점
+if __name__ == "__main__":
+    main()
